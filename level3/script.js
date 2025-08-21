@@ -11,7 +11,7 @@ const levelConfig = {
     ['red','red','red','red','red','red','red','red','red','red']
   ],
   target: 'green',
-  maxMoves: 5
+  maxMoves: 3
 };
 
 let boardData = JSON.parse(JSON.stringify(levelConfig.boardData));
