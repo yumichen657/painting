@@ -7,6 +7,7 @@ const levelConfig = {
   ['red','red','red','red','red','red','red', null ],
   ['green','red','green','red','green','red','green','red'],
   ['red','red','red','red','red','red','red', null ],
+  ['green','red','green','red','green','red','green','red'],
   ['blue','yellow','blue','yellow','blue','yellow','blue','blue']
 ],
   target: 'blue',
