@@ -1,11 +1,11 @@
-const rows2=10, cols2=8, maxMoves2=6;
-let movesLeft2=maxMoves2;
-const board2=document.getElementById("board");
-const movesDisplay2=document.getElementById("movesLeft");
-const paletteBtns2=document.querySelectorAll(".color-btn");
-movesDisplay2.textContent=movesLeft2;
+const rows=10, cols=8, maxMoves=6;
+let movesLeft=maxMoves;
+const board=document.getElementById("board");
+const movesDisplay=document.getElementById("movesLeft");
+const paletteBtns=document.querySelectorAll(".color-btn");
+movesDisplay.textContent=movesLeft;
 
-const initialColors2=[
+const initialColors=[
 ["red","red","red","red","red","red","red","red"],
 ["red","yellow","yellow","yellow","yellow","yellow","yellow","red"],
 ["red","yellow","yellow","green","green","yellow","yellow","red"],
@@ -18,56 +18,55 @@ const initialColors2=[
 ["red","red","red","red","red","red","red","red"]
 ];
 
-let grid2=[];
-function createBoard2(){
-  for(let i=0;i<rows2;i++){
-    grid2[i]=[];
-    for(let j=0;j<cols2;j++){
+let grid=[];
+function createBoard(){
+  for(let i=0;i<rows;i++){
+    grid[i]=[];
+    for(let j=0;j<cols;j++){
       const cell=document.createElement("div");
       cell.classList.add("cell");
-      cell.style.background=initialColors2[i][j];
-      cell.dataset.color=initialColors2[i][j];
-      board2.appendChild(cell);
-      grid2[i][j]=cell;
+      cell.style.background=initialColors[i][j];
+      cell.dataset.color=initialColors[i][j];
+      board.appendChild(cell);
+      grid[i][j]=cell;
     }
   }
 }
 
-function floodFill2(targetColor){
-  const originalColor=grid2[0][0].dataset.color;
+function floodFill(targetColor){
+  const originalColor=grid[0][0].dataset.color;
   if(originalColor===targetColor) return;
   function dfs(i,j){
-    if(i<0||j<0||i>=rows2||j>=cols2) return;
-    if(grid2[i][j].dataset.color!==originalColor) return;
-    grid2[i][j].dataset.color=targetColor;
-    grid2[i][j].style.background=targetColor;
-    setTimeout(()=>{},50);
+    if(i<0||j<0||i>=rows||j>=cols) return;
+    if(grid[i][j].dataset.color!==originalColor) return;
+    grid[i][j].dataset.color=targetColor;
+    grid[i][j].style.background=targetColor;
     dfs(i+1,j); dfs(i-1,j); dfs(i,j+1); dfs(i,j-1);
   }
   dfs(0,0);
 }
 
-function checkWin2(){
-  const color=grid2[0][0].dataset.color;
-  for(let i=0;i<rows2;i++){
-    for(let j=0;j<cols2;j++){
-      if(grid2[i][j].dataset.color!==color) return false;
+function checkWin(){
+  const color=grid[0][0].dataset.color;
+  for(let i=0;i<rows;i++){
+    for(let j=0;j<cols;j++){
+      if(grid[i][j].dataset.color!==color) return false;
     }
   }
   return true;
 }
 
-paletteBtns2.forEach(btn=>{
+paletteBtns.forEach(btn=>{
   btn.onclick=()=>{
-    if(movesLeft2<=0) return;
-    paletteBtns2.forEach(b=>b.classList.remove("selected"));
+    if(movesLeft<=0) return;
+    paletteBtns.forEach(b=>b.classList.remove("selected"));
     btn.classList.add("selected");
-    floodFill2(btn.dataset.color);
-    movesLeft2--;
-    movesDisplay2.textContent=movesLeft2;
-    if(checkWin2()) setTimeout(()=>alert("恭喜過關！"),100);
-    else if(movesLeft2===0) setTimeout(()=>alert("失敗了，再試一次！"),100);
+    floodFill(btn.dataset.color);
+    movesLeft--;
+    movesDisplay.textContent=movesLeft;
+    if(checkWin()) setTimeout(()=>alert("恭喜過關！"),100);
+    else if(movesLeft===0) setTimeout(()=>alert("失敗了，再試一次！"),100);
   };
 });
 
-createBoard2();
+createBoard();
