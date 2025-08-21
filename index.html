@@ -1,41 +1,39 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-  <meta charset="UTF-8">
-  <title>溢彩畫冊 - 主畫面</title>
-  <link rel="stylesheet" href="assets/style.css">
+<meta charset="UTF-8">
+<title>溢彩畫冊 - 主畫面</title>
+<link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-  <h1>溢彩畫冊</h1>
-  <div class="levels">
-    <a href="levels/level1/index.html">第 1 關</a>
-    <a href="levels/level2/index.html">第 2 關</a>
-    <a href="levels/level3/index.html">第 3 關</a>
+<h1>溢彩畫冊</h1>
+<div class="levels">
+  <a href="levels/level1/index.html">第 1 關</a>
+  <a href="levels/level2/index.html">第 2 關</a>
+  <a href="levels/level3/index.html">第 3 關</a>
+</div>
+
+<!-- 問號按鈕 -->
+<button id="helpBtn">?</button>
+
+<!-- 教學彈窗 -->
+<div id="tutorial">
+  <div id="tutorialContent">
+    <h2>新手教學</h2>
+    <p>選擇一個顏色，會將連接的方塊染成該顏色。</p>
+    <p>目標：在限定步數內，把全部色塊染成同一種顏色！</p>
+    <button id="closeTutorial">我知道了</button>
   </div>
+</div>
 
-  <!-- 問號按鈕 -->
-  <button id="helpBtn">?</button>
+<script>
+const helpBtn = document.getElementById("helpBtn");
+const tutorial = document.getElementById("tutorial");
+const closeTutorial = document.getElementById("closeTutorial");
 
-  <!-- 教學彈窗 -->
-  <div id="tutorial">
-    <div id="tutorialContent">
-      <h2>新手教學</h2>
-      <p>選擇一個顏色，會將連接的方塊染成該顏色。</p>
-      <p>目標：在限定步數內，把全部色塊染成同一種顏色！</p>
-      <button id="closeTutorial">我知道了</button>
-    </div>
-  </div>
-
-  <script>
-    const helpBtn = document.getElementById("helpBtn");
-    const tutorial = document.getElementById("tutorial");
-    const closeTutorial = document.getElementById("closeTutorial");
-
-    helpBtn.onclick = () => tutorial.style.display = "flex";
-    closeTutorial.onclick = () => tutorial.style.display = "none";
-    tutorial.onclick = (e) => {
-      if (e.target === tutorial) tutorial.style.display = "none";
-    };
-  </script>
+helpBtn.onclick = () => tutorial.style.display = "flex";
+closeTutorial.onclick = () => tutorial.style.display = "none";
+tutorial.onclick = (e) => { if(e.target === tutorial) tutorial.style.display = "none"; };
+</script>
 </body>
 </html>
