@@ -1,14 +1,14 @@
 // LEVEL 4 - 支援洞格
 const levelConfig = {
   boardData: [
-  ['blue','yellow','blue','yellow','blue','yellow','blue','blue'],
-  ['yellow','yellow','green','yellow','green','yellow','green','yellow'],
-  ['green','red','green','red','green','red','green','red'],
-  ['red','red','red','red','red','red','red', null ],
-  ['green','red','green','red','green','red','green','red'],
-  ['red','red','red','red','red','red','red', null ],
-  ['green','red','green','red','green','red','green','red'],
-  ['blue','yellow','blue','yellow','blue','yellow','blue','blue']
+  ['blue','yellow','blue','yellow','blue','yellow','blue','blue','yellow'],
+  ['yellow','yellow','green','yellow','green','yellow','green','yellow','green','yellow'],
+  ['green','red','green','red','green','red','green','red','green','red'],
+  ['red','red','red','red','red','red','red','red','red', null ],
+  ['green','red','green','red','green','red','green','red','green','red'],
+  ['red','red','red','red','red','red','red','red','red' null ],
+  ['green','red','green','red','green','red','green','red','green','red'],
+  ['blue','yellow','blue','yellow','blue','yellow','blue','yellow','blue','blue']
 ],
   target: 'blue',
   maxMoves: 4
