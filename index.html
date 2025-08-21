@@ -1,40 +1,115 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>溢彩畫 - 選關卡</title>
+  <meta charset="UTF-8">
+  <title>溢彩畫冊 - 主畫面</title>
   <style>
-    body { font-family: Arial, Helvetica, sans-serif; background:#f6f7fb; margin:0; padding:40px; text-align:center; color:#222; }
-    h1 { margin-bottom:8px; }
-    p { margin-top:0; color:#555; }
-    .levels { display:flex; gap:16px; justify-content:center; margin-top:30px; flex-wrap:wrap;}
-    .card { background:white; border-radius:12px; box-shadow:0 6px 18px rgba(30,30,60,0.08); padding:20px; width:200px; cursor:pointer; text-align:center; }
-    .card h3 { margin:10px 0 6px; }
-    .card p { margin:0; color:#666; }
-    .card:hover { transform:translateY(-6px); transition:transform .2s; }
-    footer { margin-top:40px; color:#999; font-size:14px; }
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background: #f0f0f0;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    .levels {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .levels a {
+      padding: 10px 20px;
+      background: #4CAF50;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 18px;
+      transition: 0.2s;
+      text-align: center;
+    }
+    .levels a:hover {
+      background: #45a049;
+    }
+    /* 問號按鈕 */
+    #helpBtn {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: #2196F3;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    /* 教學彈窗 */
+    #tutorial {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+    }
+    #tutorialContent {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 400px;
+      text-align: center;
+    }
+    #closeTutorial {
+      margin-top: 15px;
+      padding: 8px 15px;
+      background: #2196F3;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
-  <h1>溢彩畫</h1>
-  <p>點選關卡開始</p>
-
+  <h1>溢彩畫冊</h1>
   <div class="levels">
-    <div class="card" onclick="location.href='level1/index.html'">
-      <h3>第一關</h3>
-      <p>這遊戲能過不了關?</p>
-    </div>
-    <div class="card" onclick="location.href='level2/index.html'">
-      <h3>第二關</h3>
-      <p>這麼簡單都過不了?</p>
-    </div>
-    <div class="card" onclick="location.href='level3/index.html'">
-      <h3>第三關</h3>
-      <p>你還是回去睡覺吧</p>
+    <a href="level1/index.html">第 1 關</a>
+    <a href="level2/index.html">第 2 關</a>
+    <a href="level3/index.html">第 3 關</a>
+  </div>
+
+  <!-- 問號按鈕 -->
+  <button id="helpBtn">?</button>
+
+  <!-- 教學彈窗 -->
+  <div id="tutorial">
+    <div id="tutorialContent">
+      <h2>新手教學</h2>
+      <p>選擇一個顏色，會將連接的方塊染成該顏色。</p>
+      <p>目標：在限定步數內，把全部色塊染成同一種顏色！</p>
+      <button id="closeTutorial">我知道了</button>
     </div>
   </div>
 
-  <footer>你的智商肯定行。</footer>
+  <script>
+    const helpBtn = document.getElementById("helpBtn");
+    const tutorial = document.getElementById("tutorial");
+    const closeTutorial = document.getElementById("closeTutorial");
+
+    helpBtn.onclick = () => tutorial.style.display = "flex";
+    closeTutorial.onclick = () => tutorial.style.display = "none";
+    tutorial.onclick = (e) => {
+      if (e.target === tutorial) tutorial.style.display = "none";
+    };
+  </script>
 </body>
 </html>
