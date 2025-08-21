@@ -5,7 +5,6 @@ const movesDisplay=document.getElementById("movesLeft");
 const paletteBtns=document.querySelectorAll(".color-btn");
 movesDisplay.textContent=movesLeft;
 
-// 10x8 初始顏色
 const initialColors=[
 ["red","red","red","red","red","red","red","red"],
 ["red","green","green","green","green","green","green","red"],
@@ -42,7 +41,6 @@ function floodFill(targetColor){
     if(grid[i][j].dataset.color!==originalColor) return;
     grid[i][j].dataset.color=targetColor;
     grid[i][j].style.background=targetColor;
-    setTimeout(()=>{},50);
     dfs(i+1,j); dfs(i-1,j); dfs(i,j+1); dfs(i,j-1);
   }
   dfs(0,0);
