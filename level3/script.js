@@ -1,11 +1,11 @@
-const rows3=10, cols3=8, maxMoves3=7;
-let movesLeft3=maxMoves3;
-const board3=document.getElementById("board");
-const movesDisplay3=document.getElementById("movesLeft");
-const paletteBtns3=document.querySelectorAll(".color-btn");
-movesDisplay3.textContent=movesLeft3;
+const rows=10, cols=8, maxMoves=7;
+let movesLeft=maxMoves;
+const board=document.getElementById("board");
+const movesDisplay=document.getElementById("movesLeft");
+const paletteBtns=document.querySelectorAll(".color-btn");
+movesDisplay.textContent=movesLeft;
 
-const initialColors3=[
+const initialColors=[
 ["blue","blue","blue","blue","blue","blue","blue","blue"],
 ["blue","green","green","green","green","green","green","blue"],
 ["blue","green","yellow","yellow","yellow","yellow","green","blue"],
@@ -18,56 +18,55 @@ const initialColors3=[
 ["blue","blue","blue","blue","blue","blue","blue","blue"]
 ];
 
-let grid3=[];
-function createBoard3(){
-  for(let i=0;i<rows3;i++){
-    grid3[i]=[];
-    for(let j=0;j<cols3;j++){
+let grid=[];
+function createBoard(){
+  for(let i=0;i<rows;i++){
+    grid[i]=[];
+    for(let j=0;j<cols;j++){
       const cell=document.createElement("div");
       cell.classList.add("cell");
-      cell.style.background=initialColors3[i][j];
-      cell.dataset.color=initialColors3[i][j];
-      board3.appendChild(cell);
-      grid3[i][j]=cell;
+      cell.style.background=initialColors[i][j];
+      cell.dataset.color=initialColors[i][j];
+      board.appendChild(cell);
+      grid[i][j]=cell;
     }
   }
 }
 
-function floodFill3(targetColor){
-  const originalColor=grid3[0][0].dataset.color;
+function floodFill(targetColor){
+  const originalColor=grid[0][0].dataset.color;
   if(originalColor===targetColor) return;
   function dfs(i,j){
-    if(i<0||j<0||i>=rows3||j>=cols3) return;
-    if(grid3[i][j].dataset.color!==originalColor) return;
-    grid3[i][j].dataset.color=targetColor;
-    grid3[i][j].style.background=targetColor;
-    setTimeout(()=>{},50);
+    if(i<0||j<0||i>=rows||j>=cols) return;
+    if(grid[i][j].dataset.color!==originalColor) return;
+    grid[i][j].dataset.color=targetColor;
+    grid[i][j].style.background=targetColor;
     dfs(i+1,j); dfs(i-1,j); dfs(i,j+1); dfs(i,j-1);
   }
   dfs(0,0);
 }
 
-function checkWin3(){
-  const color=grid3[0][0].dataset.color;
-  for(let i=0;i<rows3;i++){
-    for(let j=0;j<cols3;j++){
-      if(grid3[i][j].dataset.color!==color) return false;
+function checkWin(){
+  const color=grid[0][0].dataset.color;
+  for(let i=0;i<rows;i++){
+    for(let j=0;j<cols;j++){
+      if(grid[i][j].dataset.color!==color) return false;
     }
   }
   return true;
 }
 
-paletteBtns3.forEach(btn=>{
+paletteBtns.forEach(btn=>{
   btn.onclick=()=>{
-    if(movesLeft3<=0) return;
-    paletteBtns3.forEach(b=>b.classList.remove("selected"));
+    if(movesLeft<=0) return;
+    paletteBtns.forEach(b=>b.classList.remove("selected"));
     btn.classList.add("selected");
-    floodFill3(btn.dataset.color);
-    movesLeft3--;
-    movesDisplay3.textContent=movesLeft3;
-    if(checkWin3()) setTimeout(()=>alert("恭喜過關！"),100);
-    else if(movesLeft3===0) setTimeout(()=>alert("失敗了，再試一次！"),100);
+    floodFill(btn.dataset.color);
+    movesLeft--;
+    movesDisplay.textContent=movesLeft;
+    if(checkWin()) setTimeout(()=>alert("恭喜過關！"),100);
+    else if(movesLeft===0) setTimeout(()=>alert("失敗了，再試一次！"),100);
   };
 });
 
-createBoard3();
+createBoard();
