@@ -1,50 +1,133 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>溢彩畫 - 第一關</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>溢彩畫冊 - 第 1 關</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background: #fafafa;
+    }
+    h2 { margin-bottom: 10px; }
+    #moves { margin-bottom: 20px; font-size: 18px; }
+    .board {
+      display: grid;
+      grid-template-columns: repeat(5, 50px);
+      grid-template-rows: repeat(5, 50px);
+      gap: 2px;
+    }
+    .cell {
+      width: 50px; height: 50px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: transform 0.2s;
+    }
+    .cell:active { transform: scale(0.9); }
+    .palette {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+    }
+    .color-btn {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s, border 0.2s;
+    }
+    .color-btn:active { transform: scale(0.85); }
+    .selected { border: 3px solid black; }
+  </style>
 </head>
 <body>
-  <button id="helpBtn" title="教學">?</button>
-
-  <header>
-    <h1>第一關</h1>
-    <div class="status">
-      <div>目標顏色：<span id="targetLabel"></span></div>
-      <div>剩餘步數：<span id="movesLeft"></span></div>
-    </div>
-  </header>
-
-  <div id="palette" aria-label="調色盤">
-    <button class="color-btn" data-color="red" style="background:red"></button>
-    <button class="color-btn" data-color="green" style="background:green"></button>
-    <button class="color-btn" data-color="blue" style="background:blue"></button>
-    <button class="color-btn" data-color="yellow" style="background:gold"></button>
+  <h2>第 1 關</h2>
+  <div id="moves">剩餘步數：<span id="movesLeft">5</span></div>
+  <div class="board" id="board"></div>
+  <div class="palette">
+    <button class="color-btn" style="background:red" data-color="red"></button>
+    <button class="color-btn" style="background:green" data-color="green"></button>
+    <button class="color-btn" style="background:blue" data-color="blue"></button>
   </div>
 
-  <div id="board"></div>
+  <script>
+    const size = 5;
+    const maxMoves = 5;
+    let movesLeft = maxMoves;
+    const board = document.getElementById("board");
+    const movesText = document.getElementById("movesLeft");
+    const paletteBtns = document.querySelectorAll(".color-btn");
 
-  <!-- 教學 overlay（會在載入時自動開啟） -->
-  <div id="tutorial" class="overlay">
-    <div class="tutorial-box">
-      <h2>新手教學</h2>
-      <p>操作說明：</p>
-      <ol>
-        <li>先點選調色盤顏色。</li>
-        <li>再點選畫板任意色塊，該色塊相連的同色區域全部染成你選的顏色。</li>
-        <li>目標是把整個畫板變成「目標顏色」。每一關有步數限制，用完會失敗。</li>
-      </ol>
+    const colors = ["red", "green", "blue"];
+    let grid = [];
 
-      <hr>
-      <div style="text-align:center;">
-        <button id="runDemo" class="cta">示範</button>
-        <button id="tutorialOk" class="cta">知道了，開始遊戲</button>
-      </div>
-    </div>
-  </div>
+    // 建立棋盤
+    function createBoard() {
+      for (let i=0; i<size; i++) {
+        grid[i] = [];
+        for (let j=0; j<size; j++) {
+          const cell = document.createElement("div");
+          cell.classList.add("cell");
+          const color = colors[Math.floor(Math.random()*colors.length)];
+          cell.style.background = color;
+          cell.dataset.color = color;
+          board.appendChild(cell);
+          grid[i][j] = cell;
+        }
+      }
+    }
 
-  <script src="script.js"></script>
+    // 染色
+    function floodFill(targetColor) {
+      let originalColor = grid[0][0].dataset.color;
+      if (originalColor === targetColor) return;
+
+      function dfs(i,j) {
+        if (i<0 || j<0 || i>=size || j>=size) return;
+        if (grid[i][j].dataset.color !== originalColor) return;
+        grid[i][j].dataset.color = targetColor;
+        grid[i][j].style.background = targetColor;
+        dfs(i+1,j); dfs(i-1,j); dfs(i,j+1); dfs(i,j-1);
+      }
+      dfs(0,0);
+    }
+
+    // 檢查勝利
+    function checkWin() {
+      let color = grid[0][0].dataset.color;
+      for (let i=0;i<size;i++) {
+        for (let j=0;j<size;j++) {
+          if (grid[i][j].dataset.color !== color) return false;
+        }
+      }
+      return true;
+    }
+
+    // 綁定調色盤
+    paletteBtns.forEach(btn => {
+      btn.onclick = () => {
+        if (movesLeft <= 0) return;
+        paletteBtns.forEach(b => b.classList.remove("selected"));
+        btn.classList.add("selected");
+
+        floodFill(btn.dataset.color);
+        movesLeft--;
+        movesText.textContent = movesLeft;
+
+        if (checkWin()) {
+          setTimeout(()=>alert("恭喜過關！"),100);
+        } else if (movesLeft === 0) {
+          setTimeout(()=>alert("失敗了，再試一次！"),100);
+        }
+      };
+    });
+
+    createBoard();
+  </script>
 </body>
 </html>
