@@ -5,7 +5,7 @@ const movesDisplay=document.getElementById("movesLeft");
 const paletteBtns=document.querySelectorAll(".color-btn");
 movesDisplay.textContent=movesLeft;
 
-// 初始顏色 10x8
+// 10x8 初始顏色
 const initialColors=[
 ["red","red","red","red","red","red","red","red"],
 ["red","green","green","green","green","green","green","red"],
