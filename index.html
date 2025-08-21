@@ -1,39 +1,40 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-TW">
 <head>
-<meta charset="UTF-8">
-<title>溢彩畫冊 - 主畫面</title>
-<link rel="stylesheet" href="assets/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>溢彩畫 - 選關卡</title>
+  <style>
+    body { font-family: Arial, Helvetica, sans-serif; background:#f6f7fb; margin:0; padding:40px; text-align:center; color:#222; }
+    h1 { margin-bottom:8px; }
+    p { margin-top:0; color:#555; }
+    .levels { display:flex; gap:16px; justify-content:center; margin-top:30px; flex-wrap:wrap;}
+    .card { background:white; border-radius:12px; box-shadow:0 6px 18px rgba(30,30,60,0.08); padding:20px; width:200px; cursor:pointer; text-align:center; }
+    .card h3 { margin:10px 0 6px; }
+    .card p { margin:0; color:#666; }
+    .card:hover { transform:translateY(-6px); transition:transform .2s; }
+    footer { margin-top:40px; color:#999; font-size:14px; }
+  </style>
 </head>
 <body>
-<h1>溢彩畫冊</h1>
-<div class="levels">
-  <a href="levels/level1/index.html">第 1 關</a>
-  <a href="levels/level2/index.html">第 2 關</a>
-  <a href="levels/level3/index.html">第 3 關</a>
-</div>
+  <h1>溢彩畫</h1>
+  <p>點選關卡開始（每一關為獨立資料夾）</p>
 
-<!-- 問號按鈕 -->
-<button id="helpBtn">?</button>
-
-<!-- 教學彈窗 -->
-<div id="tutorial">
-  <div id="tutorialContent">
-    <h2>新手教學</h2>
-    <p>選擇一個顏色，會將連接的方塊染成該顏色。</p>
-    <p>目標：在限定步數內，把全部色塊染成同一種顏色！</p>
-    <button id="closeTutorial">我知道了</button>
+  <div class="levels">
+    <div class="card" onclick="location.href='level1/index.html'">
+      <h3>第一關</h3>
+      <p>Demo 教學內建（限制：3 手）</p>
+    </div>
+    <div class="card" onclick="location.href='level2/index.html'">
+      <h3>第二關</h3>
+      <p>練習中級策略（限制：4 手）</p>
+    </div>
+    <div class="card" onclick="location.href='level3/index.html'">
+      <h3>第三關</h3>
+      <p>挑戰關卡（限制：5 手）</p>
+    </div>
   </div>
-</div>
 
-<script>
-const helpBtn = document.getElementById("helpBtn");
-const tutorial = document.getElementById("tutorial");
-const closeTutorial = document.getElementById("closeTutorial");
-
-helpBtn.onclick = () => tutorial.style.display = "flex";
-closeTutorial.onclick = () => tutorial.style.display = "none";
-tutorial.onclick = (e) => { if(e.target === tutorial) tutorial.style.display = "none"; };
-</script>
+  <footer>把整個資料夾上傳到 GitHub Pages 即可玩。</footer>
 </body>
 </html>
