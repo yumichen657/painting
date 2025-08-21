@@ -1,31 +1,40 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-<meta charset="UTF-8">
-<title>溢彩畫 - 第一關</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>溢彩畫 - 選關卡</title>
+  <style>
+    body { font-family: Arial, Helvetica, sans-serif; background:#f6f7fb; margin:0; padding:40px; text-align:center; color:#222; }
+    h1 { margin-bottom:8px; }
+    p { margin-top:0; color:#555; }
+    .levels { display:flex; gap:16px; justify-content:center; margin-top:30px; flex-wrap:wrap;}
+    .card { background:white; border-radius:12px; box-shadow:0 6px 18px rgba(30,30,60,0.08); padding:20px; width:200px; cursor:pointer; text-align:center; }
+    .card h3 { margin:10px 0 6px; }
+    .card p { margin:0; color:#666; }
+    .card:hover { transform:translateY(-6px); transition:transform .2s; }
+    footer { margin-top:40px; color:#999; font-size:14px; }
+  </style>
 </head>
 <body>
-    <div id="tutorial" class="overlay">
-        <div class="tutorial-box">
-            <h2>新手教學</h2>
-            <p>點選調色盤選擇顏色，再點選畫板色塊，顏色會擴散到相鄰同色區塊。</p>
-            <p>目標是把整個畫板變成指定顏色！</p>
-            <button id="tutorialOk">開始遊戲</button>
-        </div>
+  <h1>溢彩畫</h1>
+  <p>點選關卡開始（每一關為獨立資料夾）</p>
+
+  <div class="levels">
+    <div class="card" onclick="location.href='level1/index.html'">
+      <h3>第一關</h3>
+      <p>Demo 教學內建（限制：3 手）</p>
     </div>
-
-    <button id="helpBtn">?</button>
-    <h1>第一關</h1>
-
-    <div id="palette">
-        <button class="color-btn" data-color="red" style="background:red;"></button>
-        <button class="color-btn" data-color="green" style="background:green;"></button>
-        <button class="color-btn" data-color="blue" style="background:blue;"></button>
-        <button class="color-btn" data-color="yellow" style="background:yellow;"></button>
+    <div class="card" onclick="location.href='level2/index.html'">
+      <h3>第二關</h3>
+      <p>練習中級策略（限制：4 手）</p>
     </div>
-    <div id="board"></div>
+    <div class="card" onclick="location.href='level3/index.html'">
+      <h3>第三關</h3>
+      <p>挑戰關卡（限制：5 手）</p>
+    </div>
+  </div>
 
-    <script src="script.js"></script>
+  <footer>把整個資料夾上傳到 GitHub Pages 即可玩。</footer>
 </body>
 </html>
