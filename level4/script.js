@@ -2,7 +2,7 @@
 const levelConfig = {
   boardData: [
     ['blue','yellow','blue','yellow','blue','yellow','blue','yellow','blue','yellow'],
-    ['yellow','yellow', null ,'yellow','green','yellow','green','yellow','green','yellow'], 
+    ['yellow','yellow','green','yellow','green','yellow','green','yellow','green','yellow'], 
     ['green','red','green','red','green','red','green','red','green','red'],
     ['red','red','red','red','red','red','red','red','red','red'],
     ['green','red','green','red','green','red','green','red','green','red'],
