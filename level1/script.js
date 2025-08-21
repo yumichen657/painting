@@ -1,79 +1,167 @@
-let boardData = [
-  ['red','red','red','red','red','red','red','red','red','red'],
-  ['red','green','green','green','green','green','green','green','green','red'],
-  ['red','green','green','green','green','green','green','green','green','red'],
-  ['red','green','green','green','green','green','green','green','green','red'],
-  ['red','green','green','green','green','green','green','green','green','red'],
-  ['red','green','green','green','green','green','green','green','green','red'],
-  ['red','red','red','red','red','red','red','red','red','red'],
-  ['red','blue','blue','blue','blue','blue','blue','blue','blue','red']
-];
+// LEVEL 1 - 完整程式 (遵守你提供的遊戲規則)
+// boardData: 10x8 (rows x cols)
+const levelConfig = {
+  boardData: [
+    ['red','red','red','red','red','red','red','red','red','red'],
+    ['red','green','green','green','green','green','green','green','green','red'],
+    ['red','green','green','green','green','green','green','green','green','red'],
+    ['red','green','green','green','green','green','green','green','green','red'],
+    ['red','green','green','green','green','green','green','green','green','red'],
+    ['red','green','green','green','green','green','green','green','green','red'],
+    ['red','red','red','red','red','red','red','red','red','red'],
+    ['red','blue','blue','blue','blue','blue','blue','blue','blue','red']
+  ],
+  target: 'blue',
+  maxMoves: 3
+};
 
+let boardData = JSON.parse(JSON.stringify(levelConfig.boardData)); // copy
 const boardEl = document.getElementById('board');
-let currentColor = null;
+const paletteBtns = document.querySelectorAll('.color-btn');
+const helpBtn = document.getElementById('helpBtn');
+const tutorial = document.getElementById('tutorial');
+const tutorialOk = document.getElementById('tutorialOk');
+const runDemoBtn = document.getElementById('runDemo');
+const movesLeftEl = document.getElementById('movesLeft');
+const targetLabelEl = document.getElementById('targetLabel');
 
-function renderBoard() {
-    boardEl.innerHTML = '';
-    for (let i=0;i<boardData.length;i++){
-        for (let j=0;j<boardData[i].length;j++){
-            const cell = document.createElement('div');
-            cell.className='cell';
-            cell.style.backgroundColor = boardData[i][j];
-            cell.dataset.row=i;
-            cell.dataset.col=j;
-            cell.addEventListener('click', ()=>{
-                cell.classList.add('selected');
-                setTimeout(()=>cell.classList.remove('selected'),150);
-                if(currentColor) selectedCell(i,j);
-            });
-            boardEl.appendChild(cell);
-        }
+let currentColor = null;
+let movesLeft = levelConfig.maxMoves;
+targetLabelEl.textContent = levelConfig.target;
+movesLeftEl.textContent = movesLeft;
+
+// render board
+function renderBoard(){
+  boardEl.innerHTML = '';
+  for(let r=0;r<boardData.length;r++){
+    for(let c=0;c<boardData[r].length;c++){
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      cell.style.backgroundColor = boardData[r][c];
+      cell.dataset.r = r;
+      cell.dataset.c = c;
+      cell.addEventListener('click', ()=> {
+        // show quick selection effect
+        cell.classList.add('selected');
+        setTimeout(()=>cell.classList.remove('selected'),150);
+
+        // must have color selected
+        if(!currentColor) return;
+        // perform action
+        const oldColor = boardData[r][c];
+        if(oldColor === currentColor) return; // same color → 無效
+        if(movesLeft <= 0) return; // no moves left
+        movesLeft--;
+        movesLeftEl.textContent = movesLeft;
+        floodFill(r,c,oldColor,currentColor);
+        renderBoard();
+        checkWinLose();
+      });
+      boardEl.appendChild(cell);
     }
+  }
 }
 renderBoard();
 
-// 調色盤事件
-document.querySelectorAll('.color-btn').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-        document.querySelectorAll('.color-btn').forEach(b=>b.classList.remove('selected'));
-        btn.classList.add('selected');
-        currentColor = btn.dataset.color;
-    });
+// color palette handlers
+paletteBtns.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    // visual selected
+    paletteBtns.forEach(b=>b.classList.remove('selected'));
+    btn.classList.add('selected');
+    currentColor = btn.dataset.color;
+  });
 });
 
-// Flood Fill
+// help / tutorial
+helpBtn.addEventListener('click', ()=> tutorial.style.display = 'flex');
+tutorialOk.addEventListener('click', ()=> tutorial.style.display = 'none');
+
+// flood fill (correct: only affects connected region of clicked cell)
 const dirs = [[1,0],[-1,0],[0,1],[0,-1]];
 function floodFill(r,c,oldColor,newColor){
-    if(r<0||r>=boardData.length||c<0||c>=boardData[0].length) return;
-    if(boardData[r][c]!==oldColor) return;
-    boardData[r][c]=newColor;
-    for(let d of dirs){
-        floodFill(r+d[0],c+d[1],oldColor,newColor);
+  if(r<0||r>=boardData.length||c<0||c>=boardData[0].length) return;
+  if(boardData[r][c] !== oldColor) return;
+  boardData[r][c] = newColor;
+  for(let d of dirs){
+    floodFill(r+d[0], c+d[1], oldColor, newColor);
+  }
+}
+
+// win/lose check
+function checkWinLose(){
+  // win: all cells equal to target color
+  const allTarget = boardData.every(row => row.every(cell => cell === levelConfig.target));
+  if(allTarget){
+    setTimeout(()=> alert('恭喜過關！'), 80);
+    return;
+  }
+  if(movesLeft <= 0){
+    // lost
+    setTimeout(()=> {
+      if(!confirm('步數用完，挑戰失敗。要重試嗎？')) return;
+      resetLevel();
+    }, 80);
+  }
+}
+
+// reset
+function resetLevel(){
+  boardData = JSON.parse(JSON.stringify(levelConfig.boardData));
+  movesLeft = levelConfig.maxMoves;
+  movesLeftEl.textContent = movesLeft;
+  currentColor = null;
+  paletteBtns.forEach(b=>b.classList.remove('selected'));
+  renderBoard();
+}
+
+// DEMO: 示範第一關推薦步驟（兩步示範：把紅 → 綠，然後綠 → 藍）
+// 用動畫逐步改變畫面（注意：教學演示不會消耗真正的 movesLeft）
+function runDemo(){
+  // copy original
+  const demo = JSON.parse(JSON.stringify(levelConfig.boardData));
+  // step1: 把所有紅變綠 from click at any red that connects them (we simulate red->green on red regions)
+  // but to obey rules, demo uses: select red cell at (0,0) and change to green, which will connect green areas
+  const demoSteps = [
+    {r:0,c:0,newColor:'green'},
+    {r:2,c:1,newColor: levelConfig.target} // then green->target (blue)
+  ];
+  // show sequence visually on the real board but revert afterwards
+  let i = 0;
+  const originalBoard = JSON.parse(JSON.stringify(boardData));
+  function step(){
+    if(i>=demoSteps.length){
+      // finish: restore original board and close tutorial
+      setTimeout(()=>{
+        // restore
+        boardData = JSON.parse(JSON.stringify(originalBoard));
+        renderBoard();
+      }, 400);
+      return;
     }
+    const s = demoSteps[i];
+    // apply floodFill on a temporary board for visual effect
+    floodFillDemo(s.r, s.c, demo, demo[s.r][s.c], s.newColor);
+    // render demo -> map demo to board temporarily
+    boardData = JSON.parse(JSON.stringify(demo)); renderBoard();
+    i++;
+    setTimeout(step, 700);
+  }
+  step();
 }
 
-// 點選色塊
-function selectedCell(r,c){
-    const oldColor = boardData[r][c];
-    if(oldColor===currentColor) return;
-    floodFill(r,c,oldColor,currentColor);
-    renderBoard();
-    checkWin();
+// floodFill used for demo copy
+function floodFillDemo(r,c,board,oldColor,newColor){
+  if(r<0||r>=board.length||c<0||c>=board[0].length) return;
+  if(board[r][c] !== oldColor) return;
+  board[r][c] = newColor;
+  for(let d of dirs) floodFillDemo(r+d[0], c+d[1], board, oldColor, newColor);
 }
 
-// 勝利判定
-function checkWin(){
-    const first = boardData[0][0];
-    if(boardData.every(row=>row.every(cell=>cell===first))){
-        setTimeout(()=>alert('恭喜過關！'),100);
-    }
-}
+// bind demo button
+runDemoBtn.addEventListener('click', runDemo);
 
-// 教學控制
-const tutorial = document.getElementById('tutorial');
-document.getElementById('tutorialOk').addEventListener('click', ()=>{
-    tutorial.style.display='none';
-});
-document.getElementById('helpBtn').addEventListener('click', ()=>{
-    tutorial.style.display='flex';
+// on load: open tutorial automatically
+window.addEventListener('load', ()=> {
+  tutorial.style.display = 'flex';
 });
