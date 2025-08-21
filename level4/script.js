@@ -1,4 +1,4 @@
-// LEVEL 3
+// LEVEL 4
 const levelConfig = {
   boardData: [
     ['blue','yellow','blue','yellow','blue','yellow','blue','yellow','blue','yellow'],
