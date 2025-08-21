@@ -3,88 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>溢彩畫冊 - 主畫面</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      background: #f0f0f0;
-    }
-    h1 {
-      margin-bottom: 20px;
-    }
-    .levels {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-    .levels a {
-      padding: 10px 20px;
-      background: #4CAF50;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-size: 18px;
-      transition: 0.2s;
-      text-align: center;
-    }
-    .levels a:hover {
-      background: #45a049;
-    }
-    /* 問號按鈕 */
-    #helpBtn {
-      position: fixed;
-      top: 15px;
-      right: 15px;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      border: none;
-      background: #2196F3;
-      color: white;
-      font-size: 20px;
-      cursor: pointer;
-    }
-    /* 教學彈窗 */
-    #tutorial {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.6);
-      justify-content: center;
-      align-items: center;
-    }
-    #tutorialContent {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      max-width: 400px;
-      text-align: center;
-    }
-    #closeTutorial {
-      margin-top: 15px;
-      padding: 8px 15px;
-      background: #2196F3;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-  </style>
+  <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
   <h1>溢彩畫冊</h1>
   <div class="levels">
-    <a href="level1/index.html">第 1 關</a>
-    <a href="level2/index.html">第 2 關</a>
-    <a href="level3/index.html">第 3 關</a>
+    <a href="levels/level1/index.html">第 1 關</a>
+    <a href="levels/level2/index.html">第 2 關</a>
+    <a href="levels/level3/index.html">第 3 關</a>
   </div>
 
   <!-- 問號按鈕 -->
