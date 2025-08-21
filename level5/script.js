@@ -1,4 +1,4 @@
-// LEVEL 4 - 支援洞格
+// LEVEL 5 - 支援洞格
 const levelConfig = {
   boardData: [
   ['blue','yellow','blue','yellow','blue','yellow','blue','blue','yellow'],
