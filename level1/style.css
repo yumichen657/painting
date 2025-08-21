@@ -1,6 +1,18 @@
-body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+body { font-family: Arial; text-align: center; padding: 20px; }
 h1 { margin-bottom: 20px; }
 #palette { margin-bottom: 20px; }
-.color-btn { width: 50px; height: 50px; margin: 5px; border: none; cursor: pointer; border-radius: 5px; }
+.color-btn { width: 50px; height: 50px; margin: 5px; border: none; cursor: pointer; border-radius: 5px; transition: transform 0.1s, box-shadow 0.1s; }
+.color-btn.selected { box-shadow: 0 0 10px #000; transform: scale(1.1); }
 #board { display: grid; grid-template-columns: repeat(10, 40px); grid-gap: 2px; justify-content: center; }
-.cell { width: 40px; height: 40px; border: 1px solid #999; cursor: pointer; }
+.cell { width: 40px; height: 40px; border: 1px solid #999; cursor: pointer; transition: transform 0.1s, box-shadow 0.1s; }
+.cell.selected { box-shadow: 0 0 8px #333; transform: scale(1.1); }
+
+.overlay {
+    position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7);
+    display:flex; justify-content:center; align-items:center; z-index:10;
+}
+.tutorial-box { background:white; padding:30px; border-radius:10px; width:400px; text-align:left; }
+#helpBtn {
+    position: fixed; top: 20px; right: 20px; width:40px; height:40px;
+    border:none; border-radius:50%; background:#4CAF50; color:white; font-size:20px; cursor:pointer;
+}
