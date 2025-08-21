@@ -8,8 +8,8 @@ const levelConfig = {
     ['green','red','green','red','green','red','green','red','green','red'],
     ['red','red','red','red','red','red','red','red','red','red'],
     ['green','red','green','red','green','red','green','red','green','red'],
-    ['blue','yellow','blue','yellow','blue','yellow','blue','yellow','blue','yellow'],
-  ]
+    ['blue','yellow','blue','yellow','blue','yellow','blue','yellow','blue','yellow']
+  ],
   target: 'blue',
   maxMoves: 3
 };
