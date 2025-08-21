@@ -1,8 +1,8 @@
-// LEVEL 4
+// LEVEL 4 - 支援洞格
 const levelConfig = {
   boardData: [
     ['blue','yellow','blue','yellow','blue','yellow','blue','yellow','blue','yellow'],
-    ['yellow','yellow','green','yellow','green','yellow','green','yellow','green','yellow'],
+    ['yellow','yellow', null ,'yellow','green','yellow','green','yellow','green','yellow'], 
     ['green','red','green','red','green','red','green','red','green','red'],
     ['red','red','red','red','red','red','red','red','red','red'],
     ['green','red','green','red','green','red','green','red','green','red'],
@@ -34,22 +34,27 @@ function renderBoard(){
     for(let c=0;c<boardData[r].length;c++){
       const cell = document.createElement('div');
       cell.className = 'cell';
-      cell.style.backgroundColor = boardData[r][c];
+      const color = boardData[r][c];
       cell.dataset.r = r;
       cell.dataset.c = c;
-      cell.addEventListener('click', ()=> {
-        cell.classList.add('selected');
-        setTimeout(()=>cell.classList.remove('selected'),150);
-        if(!currentColor) return;
-        const oldColor = boardData[r][c];
-        if(oldColor === currentColor) return;
-        if(movesLeft <= 0) return;
-        movesLeft--;
-        movesLeftEl.textContent = movesLeft;
-        floodFill(r,c,oldColor,currentColor);
-        renderBoard();
-        checkWinLose();
-      });
+      if(color === null){
+        cell.classList.add('hole');
+      } else {
+        cell.style.backgroundColor = color;
+        cell.addEventListener('click', ()=> {
+          cell.classList.add('selected');
+          setTimeout(()=>cell.classList.remove('selected'),150);
+          if(!currentColor) return;
+          const oldColor = boardData[r][c];
+          if(oldColor === currentColor) return;
+          if(movesLeft <= 0) return;
+          movesLeft--;
+          movesLeftEl.textContent = movesLeft;
+          floodFill(r,c,oldColor,currentColor);
+          renderBoard();
+          checkWinLose();
+        });
+      }
       boardEl.appendChild(cell);
     }
   }
@@ -70,13 +75,14 @@ tutorialOk.addEventListener('click', ()=> tutorial.style.display = 'none');
 const dirs = [[1,0],[-1,0],[0,1],[0,-1]];
 function floodFill(r,c,oldColor,newColor){
   if(r<0||r>=boardData.length||c<0||c>=boardData[0].length) return;
+  if(boardData[r][c] === null) return; // 洞不填色
   if(boardData[r][c] !== oldColor) return;
   boardData[r][c] = newColor;
   for(let d of dirs) floodFill(r+d[0], c+d[1], oldColor, newColor);
 }
 
 function checkWinLose(){
-  const allTarget = boardData.every(row => row.every(cell => cell === levelConfig.target));
+  const allTarget = boardData.every(row => row.every(cell => cell === levelConfig.target || cell === null));
   if(allTarget){
     setTimeout(()=> alert('恭喜過關！'), 80);
     return;
