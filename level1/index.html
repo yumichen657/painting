@@ -2,132 +2,40 @@
 <html lang="zh">
 <head>
   <meta charset="UTF-8">
-  <title>溢彩畫冊 - 第 1 關</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      background: #fafafa;
-    }
-    h2 { margin-bottom: 10px; }
-    #moves { margin-bottom: 20px; font-size: 18px; }
-    .board {
-      display: grid;
-      grid-template-columns: repeat(5, 50px);
-      grid-template-rows: repeat(5, 50px);
-      gap: 2px;
-    }
-    .cell {
-      width: 50px; height: 50px;
-      cursor: pointer;
-      border-radius: 5px;
-      transition: transform 0.2s;
-    }
-    .cell:active { transform: scale(0.9); }
-    .palette {
-      margin-top: 20px;
-      display: flex;
-      gap: 10px;
-    }
-    .color-btn {
-      width: 40px; height: 40px;
-      border-radius: 50%;
-      border: none;
-      cursor: pointer;
-      transition: transform 0.2s, border 0.2s;
-    }
-    .color-btn:active { transform: scale(0.85); }
-    .selected { border: 3px solid black; }
-  </style>
+  <title>溢彩畫冊 - 主畫面</title>
+  <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-  <h2>第 1 關</h2>
-  <div id="moves">剩餘步數：<span id="movesLeft">5</span></div>
-  <div class="board" id="board"></div>
-  <div class="palette">
-    <button class="color-btn" style="background:red" data-color="red"></button>
-    <button class="color-btn" style="background:green" data-color="green"></button>
-    <button class="color-btn" style="background:blue" data-color="blue"></button>
+  <h1>溢彩畫冊</h1>
+  <div class="levels">
+    <a href="levels/level1/index.html">第 1 關</a>
+    <a href="levels/level2/index.html">第 2 關</a>
+    <a href="levels/level3/index.html">第 3 關</a>
+  </div>
+
+  <!-- 問號按鈕 -->
+  <button id="helpBtn">?</button>
+
+  <!-- 教學彈窗 -->
+  <div id="tutorial">
+    <div id="tutorialContent">
+      <h2>新手教學</h2>
+      <p>選擇一個顏色，會將連接的方塊染成該顏色。</p>
+      <p>目標：在限定步數內，把全部色塊染成同一種顏色！</p>
+      <button id="closeTutorial">我知道了</button>
+    </div>
   </div>
 
   <script>
-    const size = 5;
-    const maxMoves = 5;
-    let movesLeft = maxMoves;
-    const board = document.getElementById("board");
-    const movesText = document.getElementById("movesLeft");
-    const paletteBtns = document.querySelectorAll(".color-btn");
+    const helpBtn = document.getElementById("helpBtn");
+    const tutorial = document.getElementById("tutorial");
+    const closeTutorial = document.getElementById("closeTutorial");
 
-    const colors = ["red", "green", "blue"];
-    let grid = [];
-
-    // 建立棋盤
-    function createBoard() {
-      for (let i=0; i<size; i++) {
-        grid[i] = [];
-        for (let j=0; j<size; j++) {
-          const cell = document.createElement("div");
-          cell.classList.add("cell");
-          const color = colors[Math.floor(Math.random()*colors.length)];
-          cell.style.background = color;
-          cell.dataset.color = color;
-          board.appendChild(cell);
-          grid[i][j] = cell;
-        }
-      }
-    }
-
-    // 染色
-    function floodFill(targetColor) {
-      let originalColor = grid[0][0].dataset.color;
-      if (originalColor === targetColor) return;
-
-      function dfs(i,j) {
-        if (i<0 || j<0 || i>=size || j>=size) return;
-        if (grid[i][j].dataset.color !== originalColor) return;
-        grid[i][j].dataset.color = targetColor;
-        grid[i][j].style.background = targetColor;
-        dfs(i+1,j); dfs(i-1,j); dfs(i,j+1); dfs(i,j-1);
-      }
-      dfs(0,0);
-    }
-
-    // 檢查勝利
-    function checkWin() {
-      let color = grid[0][0].dataset.color;
-      for (let i=0;i<size;i++) {
-        for (let j=0;j<size;j++) {
-          if (grid[i][j].dataset.color !== color) return false;
-        }
-      }
-      return true;
-    }
-
-    // 綁定調色盤
-    paletteBtns.forEach(btn => {
-      btn.onclick = () => {
-        if (movesLeft <= 0) return;
-        paletteBtns.forEach(b => b.classList.remove("selected"));
-        btn.classList.add("selected");
-
-        floodFill(btn.dataset.color);
-        movesLeft--;
-        movesText.textContent = movesLeft;
-
-        if (checkWin()) {
-          setTimeout(()=>alert("恭喜過關！"),100);
-        } else if (movesLeft === 0) {
-          setTimeout(()=>alert("失敗了，再試一次！"),100);
-        }
-      };
-    });
-
-    createBoard();
+    helpBtn.onclick = () => tutorial.style.display = "flex";
+    closeTutorial.onclick = () => tutorial.style.display = "none";
+    tutorial.onclick = (e) => {
+      if (e.target === tutorial) tutorial.style.display = "none";
+    };
   </script>
 </body>
 </html>
