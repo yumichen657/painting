@@ -1,20 +1,31 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <title>溢彩畫</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background: #f0f0f0; }
-        h1 { color: #333; }
-        .level-btn { margin: 10px; padding: 15px 25px; font-size: 18px; cursor: pointer; border: none; background: #4CAF50; color: white; border-radius: 8px; }
-        .level-btn:hover { background: #45a049; }
-    </style>
+<meta charset="UTF-8">
+<title>溢彩畫 - 第一關</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>溢彩畫</h1>
-    <p>選擇關卡開始遊戲</p>
-    <button class="level-btn" onclick="location.href='level1/index.html'">第一關</button>
-    <button class="level-btn" onclick="location.href='level2/index.html'">第二關</button>
-    <button class="level-btn" onclick="location.href='level3/index.html'">第三關</button>
+    <div id="tutorial" class="overlay">
+        <div class="tutorial-box">
+            <h2>新手教學</h2>
+            <p>點選調色盤選擇顏色，再點選畫板色塊，顏色會擴散到相鄰同色區塊。</p>
+            <p>目標是把整個畫板變成指定顏色！</p>
+            <button id="tutorialOk">開始遊戲</button>
+        </div>
+    </div>
+
+    <button id="helpBtn">?</button>
+    <h1>第一關</h1>
+
+    <div id="palette">
+        <button class="color-btn" data-color="red" style="background:red;"></button>
+        <button class="color-btn" data-color="green" style="background:green;"></button>
+        <button class="color-btn" data-color="blue" style="background:blue;"></button>
+        <button class="color-btn" data-color="yellow" style="background:yellow;"></button>
+    </div>
+    <div id="board"></div>
+
+    <script src="script.js"></script>
 </body>
 </html>
