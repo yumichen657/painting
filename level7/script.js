@@ -1,7 +1,7 @@
 // LEVEL 5 - 支援洞格
 const levelConfig = {
   boardData: [
-  ['red','red','red','red','red','blue','red','blue','red','blue'],
+ ['red','red','red','red','red','blue','red','blue','red','blue'],
   ['red','red','green','green','red','blue','red','blue','red','blue'],
   ['red','green','green','green','green','green','green','green','green','green'],
   ['yellow','yellow','yellow','yellow','yellow','yellow','yellow','yellow','yellow','yellow'],
@@ -10,8 +10,8 @@ const levelConfig = {
   ['red','red','green','green','red','blue','red','blue','red','blue'],
   ['red','red','red','red','red','blue','red','blue','red','blue']
 ],
-  target: 'red',
-  maxMoves: 3
+  target: 'blue',
+  maxMoves: 6
 };
 
 let boardData = JSON.parse(JSON.stringify(levelConfig.boardData));
