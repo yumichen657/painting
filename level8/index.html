@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>溢彩畫 - 第八關</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <button id="helpBtn" title="教學">?</button>
+
+  <header>
+    <h1>第八關</h1>
+    <div class="status">
+      <div>目標顏色：<span id="targetLabel"></span></div>
+      <div>剩餘步數：<span id="movesLeft"></span></div>
+    </div>
+  </header>
+
+  <div id="palette" aria-label="調色盤">
+    <button class="color-btn" data-color="red" style="background:red"></button>
+    <button class="color-btn" data-color="green" style="background:green"></button>
+    <button class="color-btn" data-color="blue" style="background:blue"></button>
+    <button class="color-btn" data-color="yellow" style="background:gold"></button>
+  </div>
+
+  <div id="board"></div>
+
+  <div id="tutorial" class="overlay">
+    <div class="tutorial-box">
+      <h2>教學</h2>
+      <p>之前為甚麼不看</p>
+      <div style="text-align:center;margin-top:12px;">
+        <button id="tutorialOk" class="cta">知道了，開始遊戲</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
